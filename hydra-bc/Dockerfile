@@ -2,14 +2,12 @@ ARG HYDRA_VERSION
 ARG KETO_VERSION
 ARG OATHKEEPER_VERSION
 
-FROM oryd/hydra:$HYDRA_VERSION
+FROM oryd/hydra-preview:$HYDRA_VERSION
 FROM oryd/keto:$KETO_VERSION
-FROM oryd/oathkeeper:$OATHKEEPER_VERSION
+FROM oryd/oathkeeper-preview:$OATHKEEPER_VERSION
 
 FROM alpine:3.7
 
-ARG SETUP_EXAMPLE
-ENV ENV_SETUP_EXAMPLE=$SETUP_EXAMPLE
 ENV BUILD_DEPS="gettext"  \
     RUNTIME_DEPS="libintl"
 
@@ -39,8 +37,8 @@ COPY --from=2 /usr/bin/oathkeeper /usr/bin/oathkeeper
 
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ADD . /tmp/
-RUN chmod -R a=+x /tmp/scripts/
 
-RUN mv "/tmp/${ENV_SETUP_EXAMPLE}/config" /tmp/config
+VOLUME /tmp/scripts
+RUN chmod -R a=+x /tmp/scripts/
 
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

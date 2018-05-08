@@ -14,7 +14,5 @@ build-dev:
 		docker build -t oryd/oathkeeper:dev ${GOPATH}/src/github.com/ory/oathkeeper/
 		docker build -t oryd/keto:dev ${GOPATH}/src/github.com/ory/keto/
 
-up-dev:
-		SETUP_EXAMPLE=oauth2-hydra-bc HYDRA_VERSION=dev KETO_VERSION=dev OATHKEEPER_VERSION=dev docker-compose up --build -d
-
-start-dev: build-dev up-dev
+start-hydra-bc:
+		cd hydra-bc; HYDRA_VERSION=latest KETO_VERSION=latest OATHKEEPER_VERSION=latest docker-compose up --build -d
