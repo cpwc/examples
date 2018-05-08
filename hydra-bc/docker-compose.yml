@@ -48,7 +48,8 @@ services:
 #     Uncomment the following line to use mysql instead.
 #      - mysqld:mysqld
     depends_on:
-      - migrate
+      - hydra-migrate
+      - keto-migrate
     volumes:
       - type: bind
         source: ../scripts
